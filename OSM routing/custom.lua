@@ -1,13 +1,15 @@
 ﻿	 
 	 
-name = "car"
+name = "wheelchair"
 -- whitelists for profile and meta
 profile_whitelist = {
-    "highway"
+    "wheelchair"
 }
 meta_whitelist = {
     "name"
 }
+
+
 -- profile definitions linking a function to a profile
 profiles = {
     {
