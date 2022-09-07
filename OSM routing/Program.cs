@@ -16,8 +16,6 @@ namespace OSM_routing
         {
             CreateDB();
 
-            
-
             RouterDb routerDb = null;
             using (var stream = new FileInfo(DBFile).OpenRead())
             {
@@ -27,6 +25,9 @@ namespace OSM_routing
 
             // get a profile.
             var profile = Vehicle.Pedestrian.Fastest(); // the default OSM pedestian profile.
+
+            //This speeds up the search (goood for mobile usage)
+            routerDb.AddContracted(profile);
 
             // create a routerpoint from a location.
             // snaps the given location to the nearest routable edge.
