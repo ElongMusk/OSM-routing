@@ -1,6 +1,7 @@
 ﻿using Itinero;
 using Itinero.IO.Osm;
 using Itinero.Osm.Vehicles;
+using Itinero.Profiles;
 using System;
 using System.IO;
 
@@ -11,10 +12,13 @@ namespace OSM_routing
         public static string SourceDataPFB = "C:\\Users\\639519\\source\\repos\\OSM routing\\OSM routing\\east-yorkshire-with-hull-latest.osm.pbf";
         public static string DBFile = "uni.routerdb";
         public static string GeoJSON = "route.geojson";
+        public static string CustomProfile = "C:\\Users\\639519\\source\\repos\\OSM routing\\OSM routing\\custom.lua";
 
         static void Main()
         {
-            CreateDB();
+            //CreateDB();
+
+            var vehicle = DynamicVehicle.LoadFromStream(File.OpenRead(CustomProfile));
 
             RouterDb routerDb = null;
             using (var stream = new FileInfo(DBFile).OpenRead())
@@ -24,7 +28,7 @@ namespace OSM_routing
             var router = new Router(routerDb);
 
             // get a profile.
-            var profile = Vehicle.Pedestrian.Fastest(); // the default OSM pedestian profile.
+            var profile = Itinero.Osm.Vehicles.Vehicle.Pedestrian.Fastest(); // the default OSM pedestian profile.
 
             //This speeds up the search (goood for mobile usage)
             routerDb.AddContracted(profile);
@@ -42,14 +46,13 @@ namespace OSM_routing
             }
         }
 
-
         public static void CreateDB()
         {
             var routerDb = new RouterDb();
             using (var stream = new FileInfo(SourceDataPFB).OpenRead())
             {
                 // create the network for pedestirans.
-                routerDb.LoadOsmData(stream, Vehicle.Pedestrian);
+                routerDb.LoadOsmData(stream, Itinero.Osm.Vehicles.Vehicle.Pedestrian);
             }
 
             // write the routerdb to disk.
