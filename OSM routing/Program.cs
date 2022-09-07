@@ -31,7 +31,7 @@ namespace OSM_routing
 
             // create a routerpoint from a location.
             // snaps the given location to the nearest routable edge.
-            var start = router.Resolve(profile, 53.769153f, -0.368449f);
+            var start = router.Resolve(profile, 53.770124f, -0.371437f);
             var end = router.Resolve(profile, 53.771634f, -0.366966f);
 
             // calculate a route.
@@ -48,7 +48,7 @@ namespace OSM_routing
             var routerDb = new RouterDb();
             using (var stream = new FileInfo(SourceDataPFB).OpenRead())
             {
-                // create the network for cars.
+                // create the network for pedestirans.
                 routerDb.LoadOsmData(stream, Vehicle.Pedestrian);
             }
 
